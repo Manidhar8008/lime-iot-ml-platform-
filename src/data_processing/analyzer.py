@@ -6,7 +6,7 @@ import sqlite3
 from pathlib import Path
 from datetime import datetime, timedelta
 
-DB_PATH = Path(__file__).parent.parent / "data" / "lime_data.db"
+DB_PATH = Path(__file__).parent.parent.parent / "data" / "lime_data.db"
 
 def analyze_vehicle_distribution():
     """Analyze geographic distribution of vehicles"""
