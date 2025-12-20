@@ -1,16 +1,22 @@
+Data Ingestion – Bringing Raw Data Into the System
+
 Purpose
-Small scripts and sample exporters that produce the raw telemetry CSV/JSON fixtures we use for demos and tests.
+This folder contains scripts responsible for fetching or exporting raw micromobility data used in the project.
 
-What belongs here
-- Sample export scripts (e.g., export_sample.py when moved)
-- Lightweight ingestion helpers that fetch/save local sample files
-- CLI entrypoints for producing demo data
+The goal of this layer is reliability and simplicity:
+- Get data from the source
+- Store it locally in a reproducible format
+- Avoid premature transformation or assumptions
 
-Acceptance criteria
-- A script in this folder should be runnable locally to produce a small sample dataset (enough for demo and tests).
-- Scripts must include a short usage note and a --sample or --dry-run mode.
+What lives here
+- Lightweight scripts that export or fetch raw telemetry data
+- Sample data exporters used for demos and testing
+- Simple command-line interfaces for generating local datasets
 
-TODO
-- Move export_sample.py here in the next commit and add a one-line example command.
+How this is used
+The outputs of this layer are treated as raw inputs.
+They are passed downstream to the data engineering layer for cleaning, validation, and transformation.
 
----
+Notes
+This layer intentionally avoids business logic and analytics.
+Keeping ingestion simple makes the rest of the system easier to reason about and debug.
