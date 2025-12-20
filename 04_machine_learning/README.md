@@ -1,15 +1,22 @@
+Machine Learning – Anticipating What May Happen
+
 Purpose
-Model training, validation, and small scripts that produce forecasts used in demos.
+This folder contains modeling code used to generate predictive signals from historical micromobility data.
 
-What belongs here
-- Training scripts (train.py), model evaluation code, and model-serving stubs (prediction entrypoints)
-- Saved small model artifacts used in demos (kept small and checked into data/ if necessary)
+The goal of this layer is anticipation, not automation:
+- Estimate near-term trends
+- Highlight potential risk areas
+- Support human decision-making with signals, not guarantees
 
-Acceptance criteria
-- A training script that runs on sample data and outputs a small model file (for demo).
-- Clear entrypoint for prediction (documented).
+What lives here
+- Model training and evaluation scripts
+- Prediction or forecasting entry points
+- Supporting code used to generate model outputs for demos
 
-TODO
-- Review predictor.py and plan a one-file-at-a-time migration into this folder.
+How this is used
+Models in this folder consume clean, engineered data.
+Their outputs are passed to the decision layer, where they are interpreted and acted upon.
 
----
+Notes
+Models are intentionally simple and interpretable.
+The focus is on usefulness and reliability rather than maximizing accuracy.
