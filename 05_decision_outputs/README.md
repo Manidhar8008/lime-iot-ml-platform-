@@ -1,14 +1,21 @@
+Decision Outputs – Turning Signals Into Actions
+
 Purpose
-Example decision artifacts: CSVs, simple rules, or example prioritization outputs used to inform rebalancing decisions.
+This folder represents the final step of the system: converting analytical insights and model outputs into artifacts that can inform business decisions.
 
-What belongs here
-- Example output CSVs or scripts that convert forecasts to decision signals
-- Small examples of how a business user could consume outputs
+The goal of this layer is actionability:
+- Reduce cognitive load for stakeholders
+- Present clear priorities or recommendations
+- Bridge the gap between data and operations
 
-Acceptance criteria
-- Contains at least one example mapping forecasts → simple rule (e.g., tile priority list).
+What lives here
+- Example CSV outputs or summaries
+- Simple rules or prioritization logic
+- Mock decision artifacts used for demonstrations
 
-TODO
-- Create a short example script that converts forecasted counts to a ranked list of tiles.
+How this is used
+Outputs from this folder are intended for non-technical consumers such as operations or product teams.
 
----
+Notes
+This layer avoids technical complexity.
+Clarity and relevance are prioritized over sophistication.
