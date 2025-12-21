@@ -10,3 +10,14 @@ The project is structured to reflect how teams work in practice:
 - Analytics for understanding behavior
 - Machine learning for anticipation
 - Decision-oriented outputs
+
+  Insights & Decisions
+
+This repository emphasizes decision-making over dashboards.
+Key operational insights and example business recommendations can be found here:
+
+- Analytics insights: 03_analytics/insights.md
+- Business recommendations: 05_decision_outputs/recommendations.md
+
+These sections demonstrate how data work translates into real operational actions.
+
