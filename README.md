@@ -2,15 +2,16 @@ Why This Exists (Business Context)
 
  What decisions were delayed or wrong in micromobility ops?
 -  Under maintenance, Stolen vehicles, Showing Wrong location within the application (faulty UI),  Gps drift.
--  
+  
 What happens Or when iot data is Late or Messy?
 -  Dsat's,  Customer retention,  Leads to 11 year Ross For business as we cannot deliver the Product satisfaction,  Misleading signals,  Wrong Kpi's and matrix,
--  
+  
 Who suffers first?
 -  Customers,  Frontline agents,  Ops and local ops,  Stakeholders,  Leadership.
--  
+  
 Why dashboards alone were not useful
--  The don’t Share feelings,  Do not answer the exact Business problem,  Do not predict signals,  Cannot control outliers.
+-  They don’t Share feelings,  Do not answer the exact Business problem,  Do not predict signals,  Cannot control outliers.
+  
 
 Decisions This Platform Enables
 
