@@ -21,30 +21,30 @@ Decisions This Platform Enables
 
 From Raw Signals to Trusted Decisions
 
- Raw IOT data -  Clean multiple data sets for different approaches for problem -  Finding multiple metrics - analysing within metrics finding the root cause and prediction(later in ML) -  Showing how bottleneck affect revenue -  Making decision for overall P&L (business)
+ Raw IOT data --  Clean multiple data sets for different approaches for problem --  Finding multiple metrics -- analysing within metrics finding the root cause and prediction(later in ML) --  Showing how bottleneck affect revenue --  Making decision for overall P&L (business)
 
 Business Impact
 
 This platform is designed to shift micromobility operations from reactive firefighting to proactive decision-making.
 
 Earlier Intervention:
- Enabled teams to identify demand spikes, maintenance risks, and SLA-impacting issues earlier, before they escalated into customer-facing problems.
+ - Enabled teams to identify demand spikes, maintenance risks, and SLA-impacting issues earlier, before they escalated into customer-facing problems.
 
 
 Reduced Operational Blind Spots:
- Converted noisy and unreliable IoT signals into trusted datasets, reducing dependence on manual checks, escalations, and intuition-driven decisions.
+ - Converted noisy and unreliable IoT signals into trusted datasets, reducing dependence on manual checks, escalations, and intuition-driven decisions.
 
 
 Improved Decision Confidence:
- Provided leadership and operations teams with consistent metrics and predictive signals, improving confidence in fleet planning, zone prioritization, and resource allocation.
+ - Provided leadership and operations teams with consistent metrics and predictive signals, improving confidence in fleet planning, zone prioritization, and resource allocation.
 
 
 Lower Reactive Load on Frontline Teams:
- By surfacing root causes and patterns behind failures (DSAT, trip failures, maintenance spikes), the system reduces repeated escalations and reactive workload.
+-  By surfacing root causes and patterns behind failures (DSAT, trip failures, maintenance spikes), the system reduces repeated escalations and reactive workload.
 
 
 Foundation for Scalable Optimization:
- Established reliable data foundations that allow analytics and ML models to operate on clean, validated data—making future optimization safer and more scalable
+ - Established reliable data foundations that allow analytics and ML models to operate on clean, validated data—making future optimization safer and more scalable
 
 
 
