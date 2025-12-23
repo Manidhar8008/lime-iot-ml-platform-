@@ -1,179 +1,179 @@
-1. Trips per Zone per Day
-What decision does this metric unlock?
+Metrics That Matter
 
-Fleet allocation across zones
+These metrics exist to protect decisions, not to impress dashboards.
+Each one survives leadership scrutiny because it exposes trade-offs and risk, not just performance.
 
-Zone expansion, contraction, or retirement
+1. Trips per Bike per Day
+What decision it supports
 
-Rebalancing frequency and staffing levels
+Fleet sizing decisions
 
-Identification of demand asymmetry across the city
+Whether to add, remove, or redeploy vehicles
 
-This metric answers:
-“Where should we place limited vehicles tomorrow?”
-
-What wrong behavior can this metric cause?
-
-Over-investing in high-volume zones that are already saturated
-
-Ignoring profitability, ride quality, or operational cost
-
-Penalizing emerging zones that are demand-constrained (not demand-poor)
-
-Creating a feedback loop where popular zones get all resources
-
-Failure mode: Optimizing volume instead of value.
-
-Why does this metric survive over time?
-
-Demand concentration is a persistent property of cities
-
-Zones change slowly; human mobility patterns change even slower
-
-Even as products evolve, where people ride remains fundamental
-
-This metric survives because geography always matters.
-
-2. Cost per Successful Trip
-What decision does this metric unlock?
-
-Pricing strategy adjustments
-
-Vehicle type ROI comparisons
-
-Cost-control initiatives (maintenance, charging, ops)
-
-Go / no-go decisions for new deployments
+Capital efficiency evaluation (are assets under- or over-used?)
 
 This metric answers:
-“Are we making money when a customer succeeds?”
+“Are we extracting reasonable value from each physical asset?”
 
-What wrong behavior can this metric cause?
+What wrong decision it could cause
 
-Cutting necessary operational costs (maintenance, safety)
+Pushing bikes into overuse, accelerating wear and failure
 
-Favoring short, low-cost trips over customer value
+Penalizing vehicles in low-demand zones where constraints are external
 
-Discouraging investment in reliability improvements
+Optimizing usage at the expense of reliability and customer trust
 
-Masking long-term asset degradation
+Failure mode: Treating utilization as free efficiency.
 
-Failure mode: Optimizing short-term efficiency at the expense of system health.
+Why it matters long-term
 
-Why does this metric survive over time?
+Asset utilization defines ROI for hardware businesses
 
-Every business must eventually answer to unit economics
+This metric remains comparable across seasons, cities, and growth stages
 
-Even with new revenue models, cost per success remains comparable
+Even as demand fluctuates, per-asset productivity remains foundational
 
-This metric scales across geographies and products
+This metric survives because hardware economics do not change.
 
-This metric survives because economics do not disappear.
+2. Utilization per Zone
+What decision it supports
 
-3. DSAT (Dissatisfaction) Normalized by Usage
-What decision does this metric unlock?
+Zone-level fleet allocation
 
-Zone-level quality interventions
+Pricing or incentive experiments
 
-Product or ops fixes targeting real pain, not loud minorities
-
-Prioritization of engineering vs operations issues
-
-Customer experience investment decisions
+Decisions to expand, shrink, or redesign zones
 
 This metric answers:
-“Where are we failing customers relative to how much we’re used?”
+“Where does supply consistently meet real demand?”
 
-What wrong behavior can this metric cause?
+What wrong decision it could cause
 
-Ignoring low-usage zones with severe issues
+Starving emerging zones that are demand-constrained, not demand-poor
 
-Penalizing high-usage zones unfairly
+Over-investing in saturated zones with diminishing returns
 
-Overcorrecting for vocal but statistically small complaints
+Ignoring regulatory or environmental constraints behind low utilization
 
-Reducing empathy to a single score
+Failure mode: Confusing low utilization with low opportunity.
 
-Failure mode: Confusing signal normalization with moral priority.
+Why it matters long-term
 
-Why does this metric survive over time?
+Spatial demand imbalance is persistent in cities
 
-Raw complaint counts are always misleading
+Zone-level utilization reveals structural, not temporary, patterns
 
-Usage normalization stabilizes comparisons across scale
+It scales as the business expands geographically
 
-As platforms grow, relative dissatisfaction matters more than absolute counts
+This metric survives because cities are uneven by nature.
 
-This metric survives because fair comparison requires context.
+3. Idle Time
+What decision it supports
 
-4. Battery Cycle ROI
-What decision does this metric unlock?
+Rebalancing frequency and strategy
 
-Battery replacement timing
+Ops staffing schedules
 
-Charging strategy optimization
-
-Vehicle design tradeoffs
-
-CapEx vs OpEx planning
+Identification of supply–demand mismatch
 
 This metric answers:
-“How much value do we extract from each battery lifecycle?”
+“Where are assets waiting instead of working?”
 
-What wrong behavior can this metric cause?
+What wrong decision it could cause
 
-Overusing batteries past safe thresholds
+Overcorrecting by flooding zones with too many vehicles
 
-Delaying replacements to inflate short-term ROI
+Misinterpreting necessary idle time as inefficiency
 
-Ignoring safety or reliability degradation
+Ignoring that some idle time is required for availability and resilience
 
-Misattributing failures to user behavior
+Failure mode: Treating zero idle time as optimal.
 
-Failure mode: Treating hardware like software.
+Why it matters long-term
 
-Why does this metric survive over time?
+Idle time reflects system friction, not just demand
 
-Physical assets obey physics, not roadmaps
+It exposes inefficiencies before revenue drops
 
-Battery degradation is inevitable and measurable
+It is a leading indicator of misallocation
 
-ROI per cycle is comparable across generations
+This metric survives because waste always precedes loss.
 
-This metric survives because hardware decay is permanent.
+4. Demand Volatility
+What decision it supports
 
-5. Maintenance Rate by Weather
-What decision does this metric unlock?
+Forecast confidence levels
 
-Proactive maintenance scheduling
+Risk buffers in fleet and staffing
 
-Weather-adjusted fleet availability
-
-Ops staffing during adverse conditions
-
-Risk mitigation policies
+Policy for surge vs steady-state operations
 
 This metric answers:
-“How does the environment amplify operational cost?”
+“How predictable is demand in this system?”
 
-What wrong behavior can this metric cause?
+What wrong decision it could cause
 
-Blaming weather for systemic maintenance failures
+Overbuilding capacity for rare spikes
 
-Overreacting to short-term anomalies
+Underpreparing for highly volatile zones or seasons
 
-Reducing availability unnecessarily
+Treating volatility as noise instead of risk
 
-Masking design flaws behind environmental noise
+Failure mode: Optimizing for averages in unstable systems.
 
-Failure mode: Treating correlation as inevitability.
+Why it matters long-term
 
-Why does this metric survive over time?
+Volatility determines how safely decisions can be automated
 
-Weather variability is constant across years
+High volatility increases the cost of being wrong
 
-Climate effects compound rather than disappear
+Stable growth depends on understanding variability, not just trends
 
-Environmental stress consistently impacts hardware systems
+This metric survives because uncertainty never disappears.
 
-This metric survives because nature always collects its tax.
+5. Weather-Adjusted Demand
+What decision it supports
+
+Accurate demand forecasting
+
+Fair performance evaluation across time periods
+
+Operational readiness under adverse conditions
+
+This metric answers:
+“What demand would exist if conditions were neutral?”
+
+What wrong decision it could cause
+
+Masking product or ops issues behind weather normalization
+
+Overconfidence in adjusted forecasts
+
+Ignoring that weather itself is a real customer constraint
+
+Failure mode: Explaining away reality instead of accounting for it.
+
+Why it matters long-term
+
+Weather effects repeat annually but vary in intensity
+
+Adjusted demand enables apples-to-apples comparisons
+
+It separates controllable decisions from uncontrollable forces
+
+This metric survives because environmental pressure is permanent.
+
+Final Principle
+
+A metric is valuable only if it can be misused
+—and still defended.
+
+These metrics matter because they force leadership to confront:
+
+trade-offs
+
+risk
+
+and second-order effects
+
+Not just performance.
