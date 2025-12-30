@@ -1,12 +1,46 @@
+"""
+Purpose:
+    Generate decision-ready asset table from raw IoT telemetry
+
+Input:
+    data/raw/lime_vehicles_sample.csv
+
+Output:
+    data/generated/asset_decision_table_v1.csv
+    data/generated/asset_decision_table_v1.xlsx
+
+Decisions Enabled:
+    - Continue operation
+    - Schedule repair
+    - Decommission asset
+
+Assumptions:
+    - Battery health inferred from battery_level
+    - Utilization inferred from rides_today
+    - Proxies used where direct cost data is unavailable
+"""
+
+
 import pandas as pd
 import numpy as np
 
 # Load base telemetry data
-df = pd.read_csv("data/lime_vehicles_sample.csv")
+df = pd.read_csv("data/raw/lime_vehicles_sample.csv")
+
+print("COLUMNS:", df.columns.tolist())
 
 # -----------------------------
 # PROXY & DERIVED FEATURES
 # -----------------------------
+
+# Vehicle type proxy (based on usage intensity)
+df["vehicle_type"] = np.where(
+    df["distance_km"] / df["rides_today"].replace(0, np.nan) > 3,
+    "scooter",
+    "bike"
+)
+df["vehicle_type"] = df["vehicle_type"].fillna("bike")
+
 
 # Battery health proxy (0–1)
 df["battery_health_index"] = df["battery_level"] / 100
@@ -64,12 +98,13 @@ df["recommended_action"] = df.apply(recommend, axis=1)
 # SAVE DECISION TABLE
 # -----------------------------
 
-df.to_csv("data/asset_decision_table_v1.csv", index=False)
+df.to_csv("data/generated/asset_decision_table_v1.csv", index=False)
 
 print("✅ Asset decision table generated successfully")
 
-df.to_excel("data/asset_decision_table_v1.xlsx", index=False,
-            
+df.to_excel(
+    "data/generated/asset_decision_table_v1.xlsx",
+    index=False,
     sheet_name="asset_decisions"
 )
 
