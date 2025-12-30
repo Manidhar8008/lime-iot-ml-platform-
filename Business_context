@@ -1,5 +1,5 @@
-Business Context – Why This Project Exists
-
+##Business Context – Why This Project Exists
+---
 Problem
 Micromobility operations generate large volumes of telemetry data, but decision-making is often reactive.
 Teams typically see issues only after customer impact or operational failure.
