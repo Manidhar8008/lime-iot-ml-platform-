@@ -69,6 +69,7 @@ df.to_csv("data/asset_decision_table_v1.csv", index=False)
 print("✅ Asset decision table generated successfully")
 
 df.to_excel("data/asset_decision_table_v1.xlsx", index=False,
+            
     sheet_name="asset_decisions"
 )
 
