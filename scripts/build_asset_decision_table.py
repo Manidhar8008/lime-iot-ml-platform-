@@ -74,8 +74,9 @@ df = df.merge(zone_stats, on="zone_id", how="left")
 # ----------------------------
 df["zone_stress_index"] = pd.qcut(
     df["deployment_density"],
-    q=3,
-    labels=["Low", "Medium", "High"]
+    q=4,
+    labels=["low", "medium", "high", "critical"],
+    duplicates="drop"
 )
 
 # ----------------------------
@@ -136,3 +137,6 @@ df[final_cols].to_csv(
 )
 
 print("✅ Final asset decision table generated")
+
+OUTPUT_PATH = "data/final/asset_decision_table_final.csv"
+
