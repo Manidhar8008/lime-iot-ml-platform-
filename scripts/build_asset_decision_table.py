@@ -24,87 +24,115 @@ Assumptions:
 import pandas as pd
 import numpy as np
 
-# Load base telemetry data
-df = pd.read_csv("data/raw/lime_vehicles_sample.csv")
+# ----------------------------
+# Load asset-level base data
+# ----------------------------
+df = pd.read_csv("data/lime_vehicles_sample.csv")
 
-print("COLUMNS:", df.columns.tolist())
+# ----------------------------
+# Time-based aggregates
+# ----------------------------
+df["battery_level_avg_7d"] = df["battery_level"].rolling(7, min_periods=1).mean()
+df["battery_level_avg_30d"] = df["battery_level"].rolling(30, min_periods=1).mean()
 
-# -----------------------------
-# PROXY & DERIVED FEATURES
-# -----------------------------
-
-# Vehicle type proxy (based on usage intensity)
-df["vehicle_type"] = np.where(
-    df["distance_km"] / df["rides_today"].replace(0, np.nan) > 3,
-    "scooter",
-    "bike"
-)
-df["vehicle_type"] = df["vehicle_type"].fillna("bike")
-
-
-# Battery health proxy (0–1)
-df["battery_health_index"] = df["battery_level"] / 100
-
-# Utilization proxy
-df["utilization_score"] = df["rides_today"]
-
-# Usage intensity proxy
-df["distance_per_ride"] = df["distance_km"] / df["rides_today"].replace(0, np.nan)
-df["distance_per_ride"] = df["distance_per_ride"].fillna(0)
-
-# City → zone proxy
-def city_to_zone(city):
-    high_load = ["bangalore", "hyderabad", "delhi"]
-    if city.lower() in high_load:
-        return "high_load"
-    return "normal"
-
-df["zone_type"] = df["city"].apply(city_to_zone)
-
-# -----------------------------
-# ECONOMIC PROXIES (ASSUMED)
-# -----------------------------
-
-# Revenue proxy
-df["revenue_per_day"] = df["rides_today"] * 10  # assumed avg revenue per ride
-
-# Cost proxies
-df["battery_cost_per_day"] = (1 - df["battery_health_index"]) * 20
-df["maintenance_cost_per_day"] = df["distance_km"] * 0.5
-
-# Net margin
-df["net_margin_per_day"] = (
-    df["revenue_per_day"]
-    - df["battery_cost_per_day"]
-    - df["maintenance_cost_per_day"]
+df["battery_trend_7d_vs_30d"] = (
+    df["battery_level_avg_7d"] - df["battery_level_avg_30d"]
 )
 
-# -----------------------------
-# DECISION LOGIC
-# -----------------------------
+df["health_decline_rate"] = -df["battery_trend_7d_vs_30d"]
 
-def recommend(row):
-    if row["net_margin_per_day"] < 0:
-        return "decommission"
-    if row["battery_health_index"] < 0.3:
-        return "repair"
-    if row["zone_type"] == "high_load" and row["battery_health_index"] < 0.5:
-        return "rotate"
+# ----------------------------
+# Usage features
+# ----------------------------
+df["rides_per_day_avg"] = df["rides_today"].rolling(7, min_periods=1).mean()
+df["utilization_trend"] = df["rides_today"].diff().fillna(0)
+
+df["utilization_percentile"] = df["rides_per_day_avg"].rank(pct=True)
+
+# ----------------------------
+# Zone construction (simple)
+# ----------------------------
+df["zone_id"] = df["city"]
+
+zone_stats = (
+    df.groupby("zone_id")
+    .agg(
+        zone_rides=("rides_today", "mean"),
+        zone_assets=("vehicle_id", "nunique"),
+    )
+    .reset_index()
+)
+
+zone_stats["deployment_density"] = (
+    zone_stats["zone_rides"] / zone_stats["zone_assets"]
+)
+
+df = df.merge(zone_stats, on="zone_id", how="left")
+
+# ----------------------------
+# Zone stress index
+# ----------------------------
+df["zone_stress_index"] = pd.qcut(
+    df["deployment_density"],
+    q=3,
+    labels=["Low", "Medium", "High"]
+)
+
+# ----------------------------
+# Intervention risk score
+# ----------------------------
+df["intervention_risk_score"] = (
+    0.5 * df["health_decline_rate"].clip(lower=0)
+    + 0.3 * df["utilization_trend"].clip(lower=0)
+    + 0.2 * (df["zone_stress_index"] == "High").astype(int)
+)
+
+# ----------------------------
+# Confidence level
+# ----------------------------
+conditions = [
+    (df["battery_level_avg_30d"].notna()) & (df["rides_per_day_avg"] > 0),
+    (df["battery_level_avg_30d"].notna()),
+]
+
+choices = ["High", "Medium"]
+df["confidence_level"] = np.select(conditions, choices, default="Low")
+
+# ----------------------------
+# Recommended action
+# ----------------------------
+def decide(row):
+    if row["intervention_risk_score"] > 1.0 and row["confidence_level"] == "High":
+        return "repair_or_rotate"
+    if row["intervention_risk_score"] > 1.0:
+        return "inspect"
     return "continue"
 
-df["recommended_action"] = df.apply(recommend, axis=1)
+df["recommended_action"] = df.apply(decide, axis=1)
 
-# -----------------------------
-# SAVE DECISION TABLE
-# -----------------------------
+# ----------------------------
+# Final decision table
+# ----------------------------
+final_cols = [
+    "vehicle_id",
+    "city",
+    "zone_id",
+    "battery_health_index",
+    "battery_level_avg_7d",
+    "battery_level_avg_30d",
+    "health_decline_rate",
+    "rides_per_day_avg",
+    "utilization_percentile",
+    "battery_trend_7d_vs_30d",
+    "zone_stress_index",
+    "deployment_density",
+    "intervention_risk_score",
+    "confidence_level",
+    "recommended_action",
+]
 
-df.to_csv("data/generated/asset_decision_table_v1.csv", index=False)
-
-print("✅ Asset decision table generated successfully")
-
-df.to_excel(
-    "data/generated/asset_decision_table_v1.xlsx",
-    index=False,
-    sheet_name="asset_decisions"
+df[final_cols].to_csv(
+    "data/asset_decision_table_final.csv", index=False
 )
 
+print("✅ Final asset decision table generated")
