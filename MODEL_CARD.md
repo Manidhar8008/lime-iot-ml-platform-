@@ -1,226 +1,90 @@
-Model Card — Asset Intervention Risk Model
-Model Objective
-The purpose of this model is to estimate the probability that an operational asset will require preventive intervention within the next 7–14 days, in order to reduce avoidable downtime and revenue loss.
-This model does not predict asset failure.
- It predicts intervention risk, enabling early, reversible action.
+Model Purpose
+
+This system does not predict asset failure.
+It prioritizes assets for preventive operational intervention under uncertainty.
+
+The output is a decision support signal, not an automated action.
 
 Prediction Target
-Target variable: needs_intervention (binary)
-1 → Asset required preventive operational action within the prediction window
 
+The model estimates the relative risk that an asset will require operational intervention (inspection, repair, or rotation) within a short forward-looking window.
 
-0 → Asset continued normal operation
+Risk is expressed as a composite score, not a probability.
 
+Signal Construction
 
-Intervention includes:
-Battery service or inspection
+The risk score is constructed from three categories of signals:
 
+Asset Health Momentum
 
-Temporary removal from fleet
+Battery level trends (short-term vs long-term averages)
 
+Interpreted as early-warning momentum, not degradation certainty
 
-Maintenance-triggered downtime
+Utilization Pressure
 
+Recent ride frequency and changes in usage
 
-Margin-negative operation indicating unsustainable usage
+Represents mechanical and battery stress
 
+Zone Stress
 
-This framing avoids failure-only labeling and reflects real operational workflows.
+Deployment density at the city / zone level
 
-Prediction Window
-Horizon: 7–14 days
+Captures environmental and operational load
 
+Uncertainty Handling (Critical)
 
-Rationale:
+Not all signals are equally reliable at all times.
 
+To account for this:
 
-Actionable for operations teams
+Signals derived from short temporal windows (e.g., battery trend) are treated as conditionally valid
 
+Signal influence is down-weighted or suppressed when data sufficiency is low
 
-Long enough to capture early degradation signals
+All recommendations are gated by a confidence level (High / Medium / Low)
 
-
-Short enough to prevent delayed response
-
-
-At time T, the model only uses data available up to T to predict intervention risk in (T, T+14].
-Strict temporal boundaries are enforced to prevent data leakage.
-
-Model Type
-Primary model:
-Logistic Regression (baseline, interpretable)
-
-
-Optional extension:
-Gradient Boosted Trees (for non-linear interactions)
-
-
-Why simple models were chosen
-Interpretability is critical for operational trust
-
-
-Decisions must be explainable to non-technical stakeholders
-
-
-Simpler models degrade more gracefully under data shift
-
-
-Model complexity is intentionally constrained.
-
-Feature Set Overview
-Features are grouped by decision relevance, not convenience.
-Asset Health
-battery_health_index
-
-
-battery_level_avg_7d
-
-
-battery_level_avg_30d
-
-
-Purpose: Capture fundamental degradation state.
-
-Usage Stress
-rides_per_day_avg
-
-
-distance_per_day_avg
-
-
-utilization_percentile
-
-
-Purpose: Measure stress accumulation that accelerates wear.
-
-Temporal Momentum
-battery_trend_7d_vs_30d
-
-
-utilization_trend
-
-
-health_decline_rate
-
-
-Purpose: Detect early warning signals before thresholds are breached.
-
-Environmental / Context Risk
-zone_stress_index
-
-
-deployment_density
-
-
-zone_intervention_rate
-
-
-Purpose: Modify risk based on operational intensity, not determine outcomes alone.
-Spatial features are intentionally discretized to preserve explainability.
-
-What the Model Does NOT Do
-This model explicitly does not:
-Optimize deployment locations
-
-
-Predict routes or rider behavior
-
-
-Perform long-term demand forecasting
-
-
-Use raw GPS trajectories
-
-
-These are future extensions, not current guarantees.
+When confidence is Low, the system defaults to non-invasive actions or no action.
 
 Validation Strategy
-Time-aware train/validation split
 
+Traditional accuracy metrics are not used.
 
-Validation performed on forward windows only
+Validation focuses on:
 
+Intervention precision for high-risk assets
 
-No random shuffling across time
+Stability of recommendations over time
 
+Coverage balance (avoiding over- or under-flagging)
 
-Metrics considered
-Precision–recall balance (intervention efficiency)
-
-
-Stability across thresholds
-
-
-Consistency across time windows
-
-
-Accuracy alone is not a sufficient success metric.
-
-Uncertainty & Risk Management
-Predictions are accompanied by confidence scores
-
-
-Low-confidence predictions do not trigger irreversible actions
-
-
-Conservative thresholds are used for automated recommendations
-
-
-The model is designed to support human-in-the-loop decision-making.
+Evaluation is performed using time-aware validation, ensuring no information leakage from future data.
 
 Known Limitations
-Battery health is a proxy, not a physical measurement
 
+Battery health is inferred from proxy measurements
 
-Environmental stress is approximated via zones
+Short-term trends may be noisy in sparse data scenarios
 
+The system does not establish causality
 
-Rare failure modes may be underrepresented
+Outputs should be interpreted as risk prioritization, not predictions of failure
 
+Appropriate Use
 
-All limitations are documented to prevent overconfidence.
+This model is suitable for:
 
-Decision Integration
-Model outputs feed into the Asset Decision Table, where:
-Risk score
+Preventive maintenance planning
 
+Asset rotation prioritization
 
-Confidence level
+Operational monitoring dashboards
 
+It is not suitable for:
 
-Operational recommendation
+Automated decommissioning
 
+Safety-critical decisions
 
-are combined to guide action.
-The model assists judgment — it does not replace it.
-
-Intended Use
-This model is designed for:
-Fleet operations teams
-
-
-Asset reliability planning
-
-
-Preventive maintenance prioritization
-
-
-It is not intended for real-time control or automated enforcement.
-
-Summary
-This model demonstrates Applied Data Science in production context:
-Business-first objective
-
-
-Conservative modeling choices
-
-
-Explicit uncertainty handling
-
-
-Clear decision alignment
-
-
-The focus is not predictive novelty, but operational reliability and trust.
-
-
+Warranty or compliance enforcement
