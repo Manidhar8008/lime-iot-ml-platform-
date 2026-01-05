@@ -1,10 +1,30 @@
-# Model Performance Comparison
+# Model Performance Comparison — Decision Context
 
-This section compares the baseline machine learning models used to predict maintenance risk.  
-The goal is not to chase complexity, but to understand how different models behave on the same business problem and what trade-offs they introduce.
+This document compares baseline machine learning models used to support
+operational decision-making in a micromobility maintenance context.
 
-| Model               | Accuracy     | Recall (Risk = 1) | ROC AUC | Strength                     |
-|---------------------|--------------|-------------------|---------|------------------------------|
+The goal is not to chase model complexity, but to understand how different
+models behave on the same business problem and what trade-offs they introduce
+when used inside a real decision system.
+
+---
+
+## Decision Context
+
+- Decision grain: Trip-level
+- Objective: Early identification of maintenance risk
+- Cost asymmetry: Missing a risky asset is costlier than investigating a false alert
+- Priority metric: Recall over precision
+
+Models are evaluated based on how well they support **operational decisions**,
+not purely on statistical performance.
+
+---
+
+## Model Performance Summary
+
+| Model               | Accuracy     | Recall (Risk = 1) | ROC AUC | Strength |
+|---------------------|--------------|-------------------|---------|----------|
 | Logistic Regression | ~0.96–0.97   | High (≈1.0)       | ~0.99   | Stable and consistent risk scoring |
 | Decision Tree       | ~0.98        | Moderate (~0.71)  | ~0.86   | Clear rules and interpretability   |
 
@@ -12,48 +32,62 @@ The goal is not to chase complexity, but to understand how different models beha
 
 ## Interpretation (Why these results matter)
 
-### Logistic Regression — Risk Scoring Model
+### Logistic Regression — Primary Risk Scoring Model
 
-Logistic Regression performs strongly when the objective is to **catch risky vehicles early**.  
-Instead of producing hard yes/no decisions, it assigns probability scores, which makes it useful for ranking assets by risk level.
+Logistic Regression performs strongly when the objective is to **catch risky assets early**.
+Instead of producing hard yes/no decisions, it assigns probability scores, which makes it
+useful for ranking assets by risk level.
 
-This behavior is especially valuable in maintenance scenarios where missing a true failure can lead to higher operational cost than investigating a false alert.
+This behavior is especially valuable in maintenance scenarios where missing a true failure
+can lead to higher operational cost than investigating a false alert.
 
 In this project, Logistic Regression consistently shows:
-- High recall on risky vehicles
+- High recall on risky cases
 - Stable performance across samples
 - Better ranking quality, reflected in ROC AUC
 
 **Key takeaway:**
 
-> Logistic Regression works well as a primary model when the focus is early risk identification rather than strict rule-based decisions.
+> Logistic Regression is best suited as the primary model when early risk
+> identification is more important than strict rule enforcement.
 
 ---
 
-### Decision Tree — Explainability and Insight Model
+### Decision Tree — Explainability and Policy Model
 
-Decision Trees help answer a different question: **why** the model is flagging risk.
+Decision Trees answer a different but equally important question: **why** risk is being flagged.
 
-They break decisions into simple, understandable rules and highlight which features influence outcomes the most.  
-This makes them useful for operational discussions and for validating whether the model logic aligns with real-world behavior.
+They break decisions into simple, human-readable rules and highlight which features influence
+outcomes the most. This makes them valuable for:
+- Operational discussions
+- Policy validation
+- Stakeholder trust
 
-Feature importance analysis shows:
-- **rides_avg_7d contributes ~70%**
-- **battery_decline_7v14 contributes ~30%**
-
-This indicates that recent usage intensity is the strongest signal for maintenance risk, while battery degradation plays a secondary but meaningful role.
+Feature importance analysis indicates:
+- Recent usage intensity is the dominant signal
+- Battery degradation provides a secondary but meaningful contribution
 
 **Key takeaway:**
 
-> Decision Trees provide transparency into operational drivers of risk and support explainability, even if their recall is lower.
+> Decision Trees trade some recall for transparency and are best used to
+> explain and validate model-driven decisions.
 
 ---
 
-## Final Recommendation
+## Final Position in the System
 
-Based on model behavior and business context:
+Both models are intentionally retained:
 
-- **Logistic Regression** is better suited as the **primary risk scoring model** due to its high recall and smooth probability outputs.
-- **Decision Trees** are best used as a **supporting model** to explain predictions and communicate risk drivers to operations teams.
+- **Logistic Regression** serves as the **primary risk scoring engine**
+- **Decision Trees** serve as a **supporting explainability layer**
 
-Together, this approach balances predictive performance with interpretability and practical decision-making.
+Predictions alone do not trigger action.
+Final decisions are made through explicit business rules applied on top
+of model outputs.
+
+This separation ensures:
+- Auditability
+- Interpretability
+- Safe operational use
+
+Model choice is driven by decision context, not leaderboard metrics.
