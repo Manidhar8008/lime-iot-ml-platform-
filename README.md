@@ -1,56 +1,144 @@
-Why This Exists (Business Context)
+# 🚲 Lime IoT Decision Analytics Platform  
+*A Data Science–Led Decision System (70% Data Science · 30% Machine Learning)*
 
- What decisions were delayed or wrong in micromobility ops?
--  Under maintenance, Stolen vehicles, Showing Wrong location within the application (faulty UI),  Gps drift.
-  
-What happens Or when iot data is Late or Messy?
--  Dsat's,  Customer retention,  Leads to 11 year Ross For business as we cannot deliver the Product satisfaction,  Misleading signals,  Wrong Kpi's and matrix,
-  
-Who suffers first?
--  Customers,  Frontline agents,  Ops and local ops,  Stakeholders,  Leadership.
-  
-Why dashboards alone were not useful
--  They don’t Share feelings,  Do not answer the exact Business problem,  Do not predict signals,  Cannot control outliers.
-  
+---
 
-Decisions This Platform Enables
+## 📌 What is this project?
 
-- Where does a business lose most money ( Zone, area, biketype)
--  When does the maintenance spike ( Weather, battery, location)
--  Categorised fraud users by levels ( User type, area,zones)
--  How does dsat Trigger in the first place rootcause ( rider details, User details)
--  Other reasons for mass and most trip fails
--  What are the area the business is losing And earning ( Zones, cities, no of trips per km,  Comparison for ¼ year)
--  What is a lifespan of vehicle ( Predictive) graphed by ( City,  Weather,  Usage, )
+This project demonstrates how **raw mobility and IoT data** can be transformed into **clear, explainable operational decisions**.
 
-From Raw Signals to Trusted Decisions
+The focus is **not on complex machine learning**, but on:
+- framing the right business problems  
+- designing reliable data foundations  
+- defining decision metrics and trade-offs  
+- using **simple ML models only where they add value**
 
- Raw IOT data --  Clean multiple data sets for different approaches for problem --  Finding multiple metrics -- analysing within metrics finding the root cause and prediction(later in ML) --  Showing how bottleneck affect revenue --  Making decision for overall P&L (business)
+This mirrors how **real data science teams** operate in production environments.
 
-Business Impact
+---
 
-This platform is designed to shift micromobility operations from reactive firefighting to proactive decision-making.
+## 🎯 Core Objective
 
-Earlier Intervention:
- - Enabled teams to identify demand spikes, maintenance risks, and SLA-impacting issues earlier, before they escalated into customer-facing problems.
+Convert noisy, real-world micromobility data into:
+
+- **Decision-ready datasets**
+- **Actionable risk signals**
+- **Explainable recommendations for operations teams**
+
+The output is a **single authoritative decision table** that stakeholders can trust.
+
+---
+
+## 🧠 How Machine Learning is Used (Intentionally Limited)
+
+Machine learning is **not the centerpiece** of this project.
+
+It is used to:
+- support **risk estimation**
+- highlight **patterns not obvious from raw data**
+- provide **decision signals**, not automated actions
+
+Models are:
+- simple
+- explainable
+- compared and evaluated transparently
+
+Final decisions are made through **explicit business logic**, not black-box predictions.
+
+---
+
+## 🏗️ Repository Structure (High-Level)
+data/ → raw, processed, and decision datasets
+scripts/ → data preparation and model training scripts
+pipeline/ → pipeline runner for reproducible execution
+reports/ → persisted evaluation reports (human-readable)
+artifacts/ → generated visual outputs (PNG)
+dashboard/ → static HTML dashboard prototype for stakeholders
+docs/ → detailed data science narrative and analysis
+notebooks/ → exploratory analysis (non-authoritative)
+future_contrib/ → experimental or future extensions
 
 
-Reduced Operational Blind Spots:
- - Converted noisy and unreliable IoT signals into trusted datasets, reducing dependence on manual checks, escalations, and intuition-driven decisions.
+---
 
+## 🧾 Authoritative Output (Very Important)
 
-Improved Decision Confidence:
- - Provided leadership and operations teams with consistent metrics and predictive signals, improving confidence in fleet planning, zone prioritization, and resource allocation.
+> **`data/Decision/asset_decision_final.csv`**  
+is the **single source of truth** for this system.
 
+All:
+- reports
+- visuals
+- dashboards
+- interpretations  
 
-Lower Reactive Load on Frontline Teams:
--  By surfacing root causes and patterns behind failures (DSAT, trip failures, maintenance spikes), the system reduces repeated escalations and reactive workload.
+are derived from this table.
 
+---
 
-Foundation for Scalable Optimization:
- - Established reliable data foundations that allow analytics and ML models to operate on clean, validated data—making future optimization safer and more scalable
+## 📊 What This Project Shows (Data Science Skills)
 
+- Business problem framing  
+- Data pipeline design  
+- Feature reasoning and metric design  
+- Risk and uncertainty analysis  
+- Model comparison and interpretation  
+- Decision logic and trade-off thinking  
+- Stakeholder-oriented communication  
 
+This is a **decision system**, not just an analysis notebook.
 
+---
 
+## 🖥️ Dashboard Prototype
 
+A lightweight **static dashboard** (`dashboard/index.html`) demonstrates how
+decision outputs can be consumed by non-technical stakeholders.
+
+No BI tools or servers required — open in a browser.
+
+---
+
+## 🔁 Reproducibility
+
+A simple pipeline runner orchestrates:
+- training data creation
+- baseline model training
+- output validation
+
+The system is:
+- deterministic
+- auditable
+- easy to extend
+
+---
+
+## 🚫 Out of Scope (By Design)
+
+To keep the project focused, the following are intentionally excluded:
+- real-time data ingestion
+- automated retraining
+- production infrastructure
+- live dashboards
+
+This project prioritizes **decision clarity over system complexity**.
+
+---
+
+## 👤 Intended Audience
+
+- Data Scientists  
+- Analytics Leads  
+- Product & Operations Managers  
+- Interviewers evaluating real-world problem solving  
+
+---
+
+## ✅ Final Note
+
+This repository reflects how **modern data science teams** build systems:
+- start with decisions
+- earn trust through data
+- use ML as a tool, not a goal
+
+---
