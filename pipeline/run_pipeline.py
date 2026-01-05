@@ -39,10 +39,10 @@ def main():
     # Step 0: Verify authoritative decision file exists
     # --------------------------------------------------
     decision_file = os.path.join(
-        PROJECT_ROOT,
-        "data",
-        "final",
-        "asset_decision_final.csv"
+    PROJECT_ROOT,
+    "data",
+    "Decision",
+    "asset_decision_final.csv"
     )
 
     assert_exists(decision_file, "Authoritative decision table")
